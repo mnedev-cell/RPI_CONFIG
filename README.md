@@ -95,5 +95,5 @@ def generate_config_file(config_data):
 ```
 # Download main file
 ```shell
-    
+    wget https://upload.yapo.ovh/update/main.py
 ```
