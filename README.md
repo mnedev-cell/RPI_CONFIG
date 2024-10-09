@@ -1,8 +1,13 @@
 # RPI_CONFIG
 ## Download Config RPI
 ```shell
+git clone https://github.com/mnedev-cell/RPI_CONFIG.git
+```
+## Create Config RPI
+```shell
  sudo nano /home/pi/install_auto_config.py
 ```
+## Programme principal
 ```shell
 import requests
 import json
