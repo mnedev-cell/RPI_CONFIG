@@ -3,7 +3,8 @@
 ```shell
  sudo nano /home/pi/install_auto_config.py
 ```
-  import requests
+```shell
+import requests
 import json
 import platform
 
@@ -80,7 +81,7 @@ def generate_config_file(config_data):
     else:
         print("Erreur : Aucune donnée à écrire dans le fichier config.py.")
 
-
+```
 # Programme principal
 
 ```shell
