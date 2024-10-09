@@ -98,10 +98,31 @@ def generate_config_file(config_data):
     wget https://upload.yapo.ovh/update/main.py
 ```
 # AUTOSTART_TERMINAL
+```shell
+  sudo nano  /home/pi/dir/autostart
+```
+
+## autostart file
+```shell
+ #!/bin/bash
+ echo "Initial Start"
+ echo "Reload"
+ # shellcheck disable=SC2164
+ cd  /home/pi/dir/
+ while true
+ 	do
+ 	 sudo /usr/bin/python3 /home/pi/dir/main.py
+ 	 sleep 1
+ 	done
+ $SHELL
+```
+
 ## Setup autostart
 ```shell
   sudo chmod +x  /home/pi/dir/autostart
 ```
+
+
 ```shell
  sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
 ```
@@ -111,3 +132,4 @@ def generate_config_file(config_data):
     @xset -dpms
     @lxterminal --command="/home/pi/dir/autostart"
 ```
+
