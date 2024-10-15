@@ -4,7 +4,8 @@ import platform
 import subprocess as sp
 import json
 import logging
-
+            
+        
 class ColoredFormatter(logging.Formatter):
     COLORS = {
         'INFO': '\033[92m',  # Green
@@ -185,9 +186,6 @@ def setup_autostart_terminal(autostart_file_path):
 
             # Commands to disable screen blanking and run the autostart script
             new_lines = [
-#                 "@xset s noblank\n",
-#                 "@xset s off\n",
-#                 "@xset -dpms\n",
                 f"@lxterminal --command=\"{autostart_file_path}\"\n"
             ]
             read_cmd = f"sudo cat {autostart_file}"
@@ -207,10 +205,9 @@ def setup_autostart_terminal(autostart_file_path):
                 print(f"Autostart configuration added to {autostart_file}.")
         else:
             print(f"Autostart file {autostart_file} does not exist.")
-    
     except Exception as e:
         print(f"Error setting up autostart terminal: {e}")
-        
+
 def generate_config_file(config_data):
     if config_data.get('sOK_NG') == 'OK':
         autostart_file_path = config_data.get('autostart_file', '/home/pi/WORKDIR/autostart.sh')
@@ -232,7 +229,6 @@ def generate_config_file(config_data):
         ensure_config_file(config_file, config_file_url)
         # Ensure main.py is present or download it
         ensure_main_file(main_script_path,  main_file_url)
-        
         UPDATE_AUTO_RUN = config_data.get('UPDATE_AUTO_RUN')
         print("Update AUTO_RUN: ",UPDATE_AUTO_RUN)
         if UPDATE_AUTO_RUN == "Y":
@@ -241,16 +237,19 @@ def generate_config_file(config_data):
             download_file(autostart_file_url, autostart_file_path)
             chmod_file(autostart_file_path)
             setup_autostart_terminal(autostart_file_path)
+            requests.get("https://ping.logitec.ma/YAPO_UPDATE/UPDATE_RPI_CONFIG/UPDATE_AUTO_RUN/N")
         else:
             setup_autostart_terminal(autostart_file_path)
-            
+            requests.get("https://ping.logitec.ma/YAPO_UPDATE/UPDATE_RPI_CONFIG/UPDATE_AUTO_RUN/N")
+
         UPDATE_MAIN = config_data.get('UPDATE_MAIN')
-        print("UPDATE MAIN: ",UPDATE_MAIN)
-        if UPDATE_MAIN == "Y":
-            # Download Config file
-            #file_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), fname)
-            download_file(main_file_url, main_script_path)
-        
+#         print("UPDATE MAIN: ",UPDATE_MAIN)
+#         if UPDATE_MAIN == "Y":
+#             # Download Config file
+#             #file_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), fname)
+#             download_file(main_file_url, main_script_path)
+#             requests.get("https://ping.logitec.ma/YAPO_UPDATE/UPDATE_RPI_CONFIG/UPDATE_MAIN/N")
+
         UPDATE_WS = config_data.get('UPDATE_WS')
         print("UPDATE WS: ",UPDATE_WS)
         if UPDATE_WS == "Y":
@@ -258,14 +257,12 @@ def generate_config_file(config_data):
             ws_file_path =os.path.join(working_directory, "WebServiceClient.py")
             print(ws_file_path)
             download_file(ws_file_url, ws_file_path)
-        
+            requests.get("https://ping.logitec.ma/YAPO_UPDATE/UPDATE_RPI_CONFIG/UPDATE_WS/N")
+
+
         UPDATE_CFG = config_data.get('UPDATE_CFG')
         print("Update CFG: ",UPDATE_CFG)
         if UPDATE_CFG == "Y":
-            # Download Config file
-            #file_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), fname)
-            #download_file(config_file_url, config_file)
-        #else:
             # Création Config.py
             config = {
                 "Position": get_rpi_hostname(),  # CRA-/COU
@@ -283,10 +280,8 @@ def generate_config_file(config_data):
                 "MODE_PRG": config_data['Mode_PRG']  # Activation des relais
             }
 
-            with open(config_file, 'w') as file:
-                file.write("config = " + json.dumps(config, indent=4))
-            print(f"Config file generated successfully at: {config_file}")
-            
+            requests.get("https://ping.logitec.ma/YAPO_UPDATE/UPDATE_RPI_CONFIG/UPDATE_CFG/N")
+
     else:
         print("Configuration data indicates an error: sOK_NG is not 'OK'.")
 
