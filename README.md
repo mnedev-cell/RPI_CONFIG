@@ -375,8 +375,8 @@ sudo systemctl daemon-reload
 
 Enable and start the timer:
 ```shell
-sudo systemctl enable my_script.timer
-sudo systemctl start my_script.timer
+sudo systemctl enable auto_config_service.timer
+sudo systemctl start auto_config_service.timer
 ```
 Verify that the timer is active:
 ```shell
