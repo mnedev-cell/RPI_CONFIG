@@ -311,8 +311,9 @@ def generate_config_file(config_data):
             
     else:
         print("Configuration data indicates an error: sOK_NG is not 'OK'.")
-
+```
 # Main execution
+```shell
 sRPI_NAME = get_rpi_hostname()
 sParam_Version = "24.10.11.0"
 config_data = GET_RPI_CONFIG(sRPI_NAME, sParam_Version)
@@ -322,14 +323,13 @@ if config_data:
     generate_config_file(config_data)
 else:
     print("Failed to retrieve configuration data.")
-
 ```
-# Programme principal
-
+#Step 2: Create the systemd Service File
+Open a terminal and run:
 ```shell
-    config_data = get_rpi_config()
-    generate_config_file(config_data)
+sudo nano /etc/systemd/system/auto_config_service.service
 ```
+
 # Download main file
 ```shell
     wget https://upload.yapo.ovh/update/main.py
