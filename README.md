@@ -324,12 +324,65 @@ if config_data:
 else:
     print("Failed to retrieve configuration data.")
 ```
-#Step 2: Create the systemd Service File
+# Step 2: Create the systemd Service File
 Open a terminal and run:
 ```shell
 sudo nano /etc/systemd/system/auto_config_service.service
 ```
+Add the following content to define the service:
+```shell
+[Unit]
+ Description=Auto_Config Service
+ After=network.target
 
+[Service]
+ ExecStart=/usr/bin/python3 /home/pi/WORKDIR/auto_config_service.py
+ WorkingDirectory=/home/pi/WORKDIR
+ StandardOutput=journal
+ StandardError=journal
+ SyslogIdentifier=auto_config_service
+ Restart=on-failure
+[Install]
+ WantedBy=multi-user.target
+```
+
+# Step 3: Create the systemd Timer File
+Now create a timer for the service:
+```shell
+sudo nano /etc/systemd/system/auto_config_service.timer
+```
+Add the following content to define the timer:
+
+```shell
+[Unit]
+Description=Run Auto_Config Service every minute
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=1min
+
+[Install]
+WantedBy=timers.target
+OnBootSec=1min starts the script 1 minute after boot.
+OnUnitActiveSec=1min schedules the script to run every minute.
+```
+
+# Step 4: Enable and Start the Service
+Reload the systemd daemon to recognize the new service and timer:
+```shell
+sudo systemctl daemon-reload
+```
+
+Enable and start the timer:
+```shell
+sudo systemctl enable my_script.timer
+sudo systemctl start my_script.timer
+```
+Verify that the timer is active:
+```shell
+sudo systemctl list-timers --all
+```
+## END CFG
 # Download main file
 ```shell
     wget https://upload.yapo.ovh/update/main.py
