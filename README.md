@@ -4,8 +4,10 @@
 git clone https://github.com/mnedev-cell/RPI_CONFIG.git
 ```
 ## Create Config RPI
-Step 1: Create the Python Script
-Assume the Python script you want to run is called auto_config_service.py. Save it to a directory, for example /home/pi/WORKDIR/auto_config_service.py.
+# Step 1: Create the Python Script
+
+Assume the Python script you want to run is called auto_config_service.py. 
+Save it to a directory, for example /home/pi/WORKDIR/auto_config_service.py.
 
 ```shell
  sudo nano /home/pi/install_auto_config.py
@@ -14,6 +16,7 @@ or
 ```shell
  sudo nano /home/pi/WORKDIR/auto_config_service.py
 ```
+
 Add the following content to define the script:
 ## Programme principal
 ```shell
